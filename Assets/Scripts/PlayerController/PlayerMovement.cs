@@ -5,6 +5,7 @@ using System.Linq;
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement instance;
+    public Animator animator;
     public List<GameObject> stopPoints;
     public List<int> canMove = new List<int>() { 0, 0, 0, 0};// left, right, up, down
     [SerializeField] private GameObject playerStack;
@@ -81,7 +82,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if(other.gameObject.tag == "StopPoint")
         {
-            Debug.Log("Stop");
+            if (other.transform.position == stopPoints[stopPoints.Count - 1].transform.position)
+            {
+                animator.SetTrigger("Win");
+            }
+            else
+            {
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Take 04"))
+                {
+                    animator.SetTrigger("MoveToState");
+                }
+                animator.SetTrigger("StateToIdle");
+            }
+
             ChangeCanMove(other.gameObject.transform);
 
             MobileInput.instance.swipeLeft = false;
@@ -132,11 +145,6 @@ public class PlayerMovement : MonoBehaviour
                     canMove[0] = 1;
                 }
             }
-        }
-
-        for (int i = 0; i < canMove.Count; i++)
-        {
-            Debug.Log(canMove[i]);
         }
     }
 }
