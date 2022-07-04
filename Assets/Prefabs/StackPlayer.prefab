@@ -48,10 +48,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d5bc790883e71458f8223e9ec948df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 4294373485592981521}
+  stopPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  canMove: 00000000000000000000000000000000
   playerStack: {fileID: 4236688772362060660}
   prevStack: {fileID: 9200497754047229475}
   firstStack: {fileID: 3936589432653436896, guid: de56bb4340c05f5478ef3638b8b9783e, type: 3}
+  winPanel: {fileID: 0}
+  playerBody: {fileID: 4237563298338770546}
   speed: 10
+  travelTime: 15
 --- !u!114 &4236688771290595058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,15 +148,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4092271119058162, guid: 2e3aa5a52bc69414e82e1433ceee84c5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4092271119058162, guid: 2e3aa5a52bc69414e82e1433ceee84c5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4092271119058162, guid: 2e3aa5a52bc69414e82e1433ceee84c5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4092271119058162, guid: 2e3aa5a52bc69414e82e1433ceee84c5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -186,6 +198,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 95437692088233577, guid: 2e3aa5a52bc69414e82e1433ceee84c5, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b33bc7d1a5f78c544815dfa9a87f8ffd, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e3aa5a52bc69414e82e1433ceee84c5, type: 3}
 --- !u!4 &4234848319020096138 stripped
@@ -198,22 +214,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1518029280972810, guid: 2e3aa5a52bc69414e82e1433ceee84c5, type: 3}
   m_PrefabInstance: {fileID: 4236688773002960504}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &3125594170777613490
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4237563298338770546}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &2066369117297450023
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -227,6 +227,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!95 &4294373485592981521 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95437692088233577, guid: 2e3aa5a52bc69414e82e1433ceee84c5, type: 3}
+  m_PrefabInstance: {fileID: 4236688773002960504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4236688773087099397
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private Transform target;
-    private Vector3 offset;
+    public static CameraFollow instance;
+    public Transform target;
+    public Vector3 offset;
     [SerializeField] private float speed;
     
     void Awake()
     {
+        instance = this;
         offset = transform.position - target.position;
     }
 

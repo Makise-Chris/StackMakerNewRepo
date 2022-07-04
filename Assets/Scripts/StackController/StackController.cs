@@ -9,11 +9,6 @@ public class StackController : MonoBehaviour
     {
         if (other.gameObject.tag == "TopStack")
         {
-            if(PlayerMovement.instance.animator.GetCurrentAnimatorStateInfo(0).IsName("Take 03"))
-            {
-                PlayerMovement.instance.animator.SetTrigger("IdleToState");
-                PlayerMovement.instance.animator.SetTrigger("StateToMove");
-            }
             Process();
         }
     }

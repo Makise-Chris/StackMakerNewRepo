@@ -10,6 +10,7 @@ TagManager:
   - PlayerStack
   - TopStack
   - StopPoint
+  - WinPoint
   layers:
   - Default
   - TransparentFX

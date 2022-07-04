@@ -6,13 +6,18 @@ public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement instance;
     public Animator animator;
-    public List<GameObject> stopPoints;
-    public List<int> canMove = new List<int>() { 0, 0, 0, 0};// left, right, up, down
+    public GameObject[] stopPoints;
+   
     [SerializeField] private GameObject playerStack;
     [SerializeField] private GameObject prevStack;
     [SerializeField] private GameObject firstStack;
+    [SerializeField] private GameObject playerBody;
     [SerializeField] private float speed;
-    [SerializeField] private float travelTime;
+
+    public bool lockUp;
+    public bool lockDown;
+    public bool lockLeft;
+    public bool lockRight;
 
     private void Awake()
     {
@@ -20,39 +25,41 @@ public class PlayerMovement : MonoBehaviour
         {
             instance = this;
         }
+        stopPoints = GameObject.FindGameObjectsWithTag("StopPoint");
     }
 
     private void Start()
     {
         Instantiate(firstStack,transform.position,Quaternion.identity);
-        for(int i = 0; i < stopPoints.Count; i++)
-        {
-            Debug.Log(stopPoints[i].transform.position);
-        }
+        GameManager.instance.SetGameState(GameState.Play);
+        StartCoroutine(ChangeIdleAnim());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if((Input.GetKeyDown(KeyCode.LeftArrow) || MobileInput.instance.swipeLeft) && canMove[0] == 1)
+        if (GameManager.instance.gameState == GameState.Play)
         {
-            transform.rotation = Quaternion.Euler(0,-90,0);
-            transform.position += Vector3.left * speed * Time.deltaTime;
-        }
-        if((Input.GetKeyDown(KeyCode.RightArrow) || MobileInput.instance.swipeRight) && canMove[1] == 1)
-        {
-            transform.rotation = Quaternion.Euler(0, 90, 0);
-            transform.position += Vector3.right * speed * Time.deltaTime;
-        }
-        if((Input.GetKeyDown(KeyCode.UpArrow) || MobileInput.instance.swipeUp) && canMove[2] == 1)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-            transform.position += Vector3.forward * speed * Time.deltaTime;
-        }
-        if((Input.GetKeyDown(KeyCode.DownArrow) || MobileInput.instance.swipeDown) && canMove[3] == 1)
-        {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-            transform.position += Vector3.back * speed * Time.deltaTime;
+            if ((Input.GetKeyDown(KeyCode.LeftArrow) || MobileInput.instance.swipeLeft) && !lockLeft)
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+                transform.position += Vector3.back * speed * Time.deltaTime;
+            }
+            if ((Input.GetKeyDown(KeyCode.RightArrow) || MobileInput.instance.swipeRight) && !lockRight)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.position += Vector3.forward * speed * Time.deltaTime;
+            }
+            if ((Input.GetKeyDown(KeyCode.UpArrow) || MobileInput.instance.swipeUp) && !lockUp)
+            {
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+                transform.position += Vector3.left * speed * Time.deltaTime;
+            }
+            if ((Input.GetKeyDown(KeyCode.DownArrow) || MobileInput.instance.swipeDown) && !lockDown)
+            {
+                transform.rotation = Quaternion.Euler(0, 90, 0);
+                transform.position += Vector3.right * speed * Time.deltaTime;
+            }
         }
     }
 
@@ -70,81 +77,30 @@ public class PlayerMovement : MonoBehaviour
         prevStack.gameObject.tag = "Untagged";
         prevStack = stack;
         prevStack.GetComponent<BoxCollider>().isTrigger = false;
+
+        CameraFollow.instance.target = stack.transform;
     }
 
     public void RemoveStack()
     {
+        playerBody.transform.position -= new Vector3(0, 0.3f, 0);
         GameObject topStack = playerStack.transform.GetChild(0).gameObject;
         Destroy(topStack);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public IEnumerator ChangeIdleAnim()
     {
-        if(other.gameObject.tag == "StopPoint")
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Take 2"))
         {
-            if (other.transform.position == stopPoints[stopPoints.Count - 1].transform.position)
-            {
-                animator.SetTrigger("Win");
-            }
-            else
-            {
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Take 04"))
-                {
-                    animator.SetTrigger("MoveToState");
-                }
-                animator.SetTrigger("StateToIdle");
-            }
-
-            ChangeCanMove(other.gameObject.transform);
-
-            MobileInput.instance.swipeLeft = false;
-            MobileInput.instance.swipeRight = false;
-            MobileInput.instance.swipeUp = false;
-            MobileInput.instance.swipeDown = false;
-
-            Vector3 newPos = other.gameObject.transform.position;
-            newPos.y = transform.position.y;
-            transform.position = newPos;
-
-            for(int i = 0; i < stopPoints.Count; i++)
-            {
-                stopPoints[i].SetActive(true);
-            }
-            other.gameObject.SetActive(false);
+            animator.SetInteger("renwu", 0);
         }
+        yield return new WaitForSeconds(0.2f);
+        StartCoroutine(ChangeIdleAnim());
     }
 
-    public void ChangeCanMove(Transform curPos)
+    public IEnumerator ChangeWinAnim()
     {
-        for(int i=0; i< canMove.Count; i++)
-        {
-            canMove[i] = 0;
-        }
-
-        for(int i=0; i<stopPoints.Count; i++)
-        {
-            if (stopPoints[i].transform.position.x == curPos.position.x)
-            {
-                if(stopPoints[i].transform.position.z > curPos.position.z)
-                {
-                    canMove[2] = 1;
-                }
-                else if(stopPoints[i].transform.position.z < curPos.position.z)
-                {
-                    canMove[3] = 1;
-                }
-            }
-            else if(stopPoints[i].transform.position.z == curPos.position.z)
-            {
-                if(stopPoints[i].transform.position.x > curPos.position.x)
-                {
-                    canMove[1] = 1;
-                }
-                else if (stopPoints[i].transform.position.x < curPos.position.x)
-                {
-                    canMove[0] = 1;
-                }
-            }
-        }
+        animator.SetInteger("renwu", 2);
+        yield return new WaitForSeconds(0.3f);
     }
 }

@@ -48,7 +48,7 @@ public class MobileInput : MonoBehaviour
             {
                 if (x < 0)
                 {
-                    if (PlayerMovement.instance.canMove[0] == 1)
+                    if (!PlayerMovement.instance.lockLeft)
                     {
                         swipeLeft = true;
                     }
@@ -57,7 +57,7 @@ public class MobileInput : MonoBehaviour
                 }
                 else
                 {
-                    if (PlayerMovement.instance.canMove[1] == 1)
+                    if (!PlayerMovement.instance.lockRight)
                     {
                         swipeRight = true;
                     }
@@ -69,7 +69,7 @@ public class MobileInput : MonoBehaviour
             {
                 if (y < 0)
                 {
-                    if (PlayerMovement.instance.canMove[3] == 1)
+                    if (!PlayerMovement.instance.lockDown)
                     {
                         swipeDown = true;
                     }
@@ -78,7 +78,7 @@ public class MobileInput : MonoBehaviour
                 }
                 else
                 {
-                    if (PlayerMovement.instance.canMove[2] == 1)
+                    if (!PlayerMovement.instance.lockUp)
                     {
                         swipeUp = true;
                     }

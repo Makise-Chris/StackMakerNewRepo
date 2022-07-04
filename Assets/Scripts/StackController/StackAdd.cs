@@ -8,7 +8,7 @@ public class StackAdd : StackController
     {
         base.Process();
         gameObject.tag = "TopStack";
-        base.Process();
+        PlayerMovement.instance.animator.SetInteger("renwu", 1);
         PlayerMovement.instance.AddStack(gameObject);
     }
 }

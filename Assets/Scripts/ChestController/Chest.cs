@@ -10,7 +10,6 @@ public class Chest : MonoBehaviour
     {
         if(other.gameObject.tag == "TopStack")
         {
-            Debug.Log("Win");
             StartCoroutine(OpenChest());
         }
     }
