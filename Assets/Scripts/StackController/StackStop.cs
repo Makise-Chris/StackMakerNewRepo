@@ -28,7 +28,7 @@ public class StackStop : StackController
 
     public override void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "TopStack")
+        if (other.gameObject.CompareTag(StringManager.TopStack))
         {
             Process();
 
@@ -36,7 +36,7 @@ public class StackStop : StackController
             newPos.y = PlayerMovement.instance.transform.position.y;
             PlayerMovement.instance.transform.position = newPos;
 
-            if(gameObject.tag == "WinPoint")
+            if(gameObject.CompareTag(StringManager.WinPoint))
             {
                 StartCoroutine(PlayerMovement.instance.ChangeWinAnim());
                 GameManager.instance.SetGameState(GameState.Win);

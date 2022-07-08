@@ -9,6 +9,7 @@ public class MobileInput : MonoBehaviour
     public bool swipeLeft, swipeRight, swipeUp, swipeDown;
     public Vector2 swipeDelta, startTouch;
     [SerializeField] private float deadZone = 50;
+    private float sensitiveThreshold = 0.01f;
 
     void Awake()
     {
@@ -28,7 +29,7 @@ public class MobileInput : MonoBehaviour
         }
 
         swipeDelta = Vector2.zero;
-        if (startTouch != Vector2.zero)
+        if ((startTouch - Vector2.zero).sqrMagnitude > sensitiveThreshold)
         {
             if (Input.touches.Length != 0)
             {

@@ -7,8 +7,9 @@ public class StackAdd : StackController
     public override void Process()
     {
         base.Process();
-        gameObject.tag = "TopStack";
+        gameObject.tag = StringManager.TopStack;
         PlayerMovement.instance.animator.SetInteger("renwu", 1);
         PlayerMovement.instance.AddStack(gameObject);
+        PlayerMovement.instance.stackCount++;
     }
 }

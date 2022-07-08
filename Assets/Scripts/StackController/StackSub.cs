@@ -8,6 +8,7 @@ public class StackSub : StackController
     {
         base.Process();
         PlayerMovement.instance.RemoveStack();
-        Destroy(gameObject);
+        PlayerMovement.instance.stackCount--;
+        gameObject.SetActive(false);
     }
 }

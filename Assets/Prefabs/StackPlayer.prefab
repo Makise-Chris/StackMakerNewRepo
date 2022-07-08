@@ -56,14 +56,15 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  canMove: 00000000000000000000000000000000
   playerStack: {fileID: 4236688772362060660}
   prevStack: {fileID: 9200497754047229475}
   firstStack: {fileID: 3936589432653436896, guid: de56bb4340c05f5478ef3638b8b9783e, type: 3}
-  winPanel: {fileID: 0}
   playerBody: {fileID: 4237563298338770546}
   speed: 10
-  travelTime: 15
+  lockUp: 0
+  lockDown: 0
+  lockLeft: 0
+  lockRight: 0
 --- !u!114 &4236688771290595058
 MonoBehaviour:
   m_ObjectHideFlags: 0

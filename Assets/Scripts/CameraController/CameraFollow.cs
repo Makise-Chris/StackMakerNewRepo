@@ -12,6 +12,7 @@ public class CameraFollow : MonoBehaviour
     void Awake()
     {
         instance = this;
+        //offset = new Vector3(12.5f, 8f, 0.5f);
         offset = transform.position - target.position;
     }
 

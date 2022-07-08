@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement instance;
     public Animator animator;
     public GameObject[] stopPoints;
+    public int stackCount;
    
     [SerializeField] private GameObject playerStack;
     [SerializeField] private GameObject prevStack;
@@ -25,7 +26,8 @@ public class PlayerMovement : MonoBehaviour
         {
             instance = this;
         }
-        stopPoints = GameObject.FindGameObjectsWithTag("StopPoint");
+        stopPoints = GameObject.FindGameObjectsWithTag(StringManager.StopPoint);
+        stackCount = 1;
     }
 
     private void Start()
@@ -74,9 +76,9 @@ public class PlayerMovement : MonoBehaviour
         playerPosition.y += 0.3f;
         transform.localPosition = playerPosition;
 
-        prevStack.gameObject.tag = "Untagged";
+        prevStack.gameObject.tag = StringManager.Untagged;
         prevStack = stack;
-        prevStack.GetComponent<BoxCollider>().isTrigger = false;
+        prevStack.GetComponent<BoxCollider>().isTrigger = false;// Doan nay em nghi bat buoc phai getComponent chu khong cache duoc a
 
         CameraFollow.instance.target = stack.transform;
     }
@@ -85,7 +87,11 @@ public class PlayerMovement : MonoBehaviour
     {
         playerBody.transform.position -= new Vector3(0, 0.3f, 0);
         GameObject topStack = playerStack.transform.GetChild(0).gameObject;
-        Destroy(topStack);
+        if(topStack != null)
+        {
+            topStack.transform.parent = ObjectPooler.instance.pool.transform;
+            topStack.SetActive(false);
+        }
     }
 
     public IEnumerator ChangeIdleAnim()

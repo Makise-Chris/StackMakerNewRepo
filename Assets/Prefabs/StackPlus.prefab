@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8406990770644978778}
   - component: {fileID: 2335357226948866204}
   - component: {fileID: 8210077991624823068}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StackPlus
   m_TagString: StackPlus
   m_Icon: {fileID: 0}
@@ -59,8 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6cacb19b102a54396fbe89b17d8f06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newStack: {fileID: 3936589432653436896, guid: de56bb4340c05f5478ef3638b8b9783e, type: 3}
-  stackTag: StackNone
+  stackTag: StackNoneAfterAdd
 --- !u!1001 &7182482945095024297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71,6 +70,10 @@ PrefabInstance:
     - target: {fileID: 1531101969777205, guid: 8aad5fca35890fd4389dabb982d52236, type: 3}
       propertyPath: m_Name
       value: dimian
+      objectReference: {fileID: 0}
+    - target: {fileID: 1531101969777205, guid: 8aad5fca35890fd4389dabb982d52236, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4012213788616213, guid: 8aad5fca35890fd4389dabb982d52236, type: 3}
       propertyPath: m_RootOrder

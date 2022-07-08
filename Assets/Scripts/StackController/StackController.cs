@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class StackController : MonoBehaviour
 {
-    public GameObject newStack;
+    public string stackTag;
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "TopStack")
+        if (other.gameObject.CompareTag(StringManager.TopStack))
         {
             Process();
         }
@@ -15,6 +15,6 @@ public class StackController : MonoBehaviour
 
     public virtual void Process()
     {
-        Instantiate(newStack, transform.position, Quaternion.identity);
+        ObjectPooler.instance.SpawnFromPool(stackTag, transform.position, Quaternion.identity);
     }
 }
